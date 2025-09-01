@@ -1,0 +1,63 @@
+[2025-09-01]
+clone https://github.com/milad-azami/rjs-divar-api.git
+-had to install Nodemon manually:
+npm install -g Nodemon
+-What is Swagger?
+Swagger is a set of open-source tools built around the OpenAPI Specification
+that can help you design, build, document, and consume REST APIs.
+Swagger allows you to describe the structure of your API s so that machines can read them.
+Other tools like swagger: Postman, Insomnia
+
+
+(Episode 340)
+-get front prerquistes from:
+https://github.com/milad-azami/rjs-divar-files
+-npm install
+
+(Episode 341)
+authentication: Verifying identity
+authorization: Granting access
+
+OTP:One Time Password
+Step 1: user enters phone number, we should POST it to /auth/send-otp/
+Step 2: back-end is going to send otp to the user, and gives us response code 200.
+Step 3: login form is gone, we show otp form and get otp from user.
+Step 4: after user entering the otp, we POST both otp and phone number to /auth/check-otp
+Step 5: code 200:logging in, otherwise: stale otp or wrong otp, no logging in 
+
+(Episode 342)
+axios configuration:
+-Installing axios: 
+npm install axios
+-config it in /configs/api.js
+-save base url in .env, import it in api.js:
+import.meta.env.VITE_BASE_URL
+
+(Episode 343)
+ceating 3 jsx:
+AuthPage
+|__SendOTPForm
+|__CheckOTPForm
+
+for handling which form must be shown, we use a simple state: Step
+
+(Episode 344)
+difference between button and form:
+1. by default, after submitting the form, the page will be reloaded. we prevent that from happening by event.preventDefault;
+2. form will provide better UX, by submitting the form by hitting both enter kry and the button
+
+(Episode 345)
+Sending OTP to user:
+-developing submitHandler in sendOTPForm.jsx
+-creating the post request in Auth.js
+-handling errors and success messages in the form using Toastify: done by me
+-Recommendation: keep your http requests in separate file in separate directory
+
+(Episode 346)
+developing jsx for CheckOTPForm.jsx
+
+(Episode 347)
+same as sending OTP, sending request to different endpoint, check the result
+???
+QUESTION: how should i know if the otp is expired, wrong, or i have some other type of error?
+
