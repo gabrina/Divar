@@ -61,3 +61,71 @@ same as sending OTP, sending request to different endpoint, check the result
 ???
 QUESTION: how should i know if the otp is expired, wrong, or i have some other type of error?
 
+[2025-09-02]
+(Episode 348)
+About access token and refresh token:
+both are tokens , considered in JWT(Json Web Token)
+they are send alongside user data so the back-end can authenticate user.
+
+access token is used to authenticate user, refresh token is used to get new access token.
+Refresh token is valid longer than access token.
+the point of refresh token:
+1- It's better to have a short-valid access token(from a secure point of view)
+2- The user data like name or role is within access token. If user's data is changed, 
+we can expire access token so quickly, and so we get new access token with the new data.
+
+after authenticating user, we send every request's header with access token.
+key tool: Axios, interceptor, local storage
+
+(Episode 349)
+saving tokens in cookie:
+cookie.js
+
+(Episode 350)
+-->a cleaner way for importing:absolute import
+
+-in vite.config.js, add this:
+
+resolve:{
+    alias:{
+        src:"/src",
+        services:"/src/services",
+        etc
+    }
+}
+
+-->the cleanest:
+save all paths in an array (/constants/paths.js) and reduce them like in vite.config.js
+(The function is really confusing:)
+
+-->config vsCode to use absolute import:
+-create jsconfig.json in root
+
+???QUESTION
+it has a problem, and he did'n get that.
+
+(Episode 351)
+defining Routes in router/Router.jsx as a component. easy
+
+(Episode 352)
+authorization:
+- logged in user should not see /auth
+- not logged in user should not see /Dashboard
+- non-admin user should not see /Admin
+
+-->therefore we need to know the user, to give him proper access,
+ and we need it in all of the project.
+-->the best tool to achieve this is React Query
+
+installation:>npm install @tanstack/react-Query
+install devtools: .npm install @tanstack/react-Query-devtools
+
+config it in app.jsx(easy)
+add these configs in configs/reactQuery.js:
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        retry: 1,
+        staleTime: 60 * 1000,
+
+(Episode 353)
+OMG: React query handles errors so we don't need to use try/catch block

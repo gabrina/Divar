@@ -18,7 +18,7 @@ function SendOTPForm({ setMobile, setStep, mobile }) {
 
     //sending OTP
     const { response, error } = await sendOTP(mobile);
-    console.log({ response, error });
+    // console.log({ response, error });
 
     //Logged in successfully
     if (response) {
