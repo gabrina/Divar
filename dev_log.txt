@@ -127,5 +127,31 @@ add these configs in configs/reactQuery.js:
         retry: 1,
         staleTime: 60 * 1000,
 
+In Router component, we need to know who the user is, so we decide which pages we should show him
+should we show him admin page, how to know if he's admin.
+Has he logged in so we show him Dashboard.
+etc
+
+so we use this endpoint: /user/whoami/
+
+we are going to need that info in other pages, so the best tool to achieve that is REACT QUERY.
+
 (Episode 353)
 OMG: React query handles errors so we don't need to use try/catch block
+Note: we should send access token and refresh token alongside the request to /user/whoami/ in the header.
+like this:
+api.get("user/whoami", {
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  }
+)
+
+Note: we used a complicated function to get access token from storage. It's all about working with strings.(getCookie from cookie.js)
+
+(Episode 354)
+Using interceptor to send access token in each and every request we send to the server in api.jsconfig
+
+
+
+
