@@ -1,6 +1,5 @@
-import {sendOTP} from "../../services/Auth";
+import { sendOTP } from "../../services/Auth";
 import { toast } from "react-toastify";
-
 
 function SendOTPForm({ setMobile, setStep, mobile }) {
   const submitHandler = async (event) => {
@@ -27,7 +26,10 @@ function SendOTPForm({ setMobile, setStep, mobile }) {
     }
 
     //login failed
-    if (error) toast.error("خطایی پیش آمده، لطفا مجددا سعی کنید");
+    if (error) {
+      toast.error("خطایی پیش آمده، لطفا مجددا سعی کنید");
+      console.log(error);
+    }
   };
 
   return (

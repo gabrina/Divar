@@ -11,9 +11,10 @@ const setCookie = (tokens) => {
 const getCookie = (cookieName) => {
   return document.cookie
     .split(";")
-    .find((token) => token.trim().split("=")[0] === cookieName)
-    .trim()
-    .split("=")[1];
+    .find((token) => token.split("=")[0] === cookieName)?.split("=")[1];
 };
+
+//?is used in case that if either of the tokens is non-existent,
+//  getCookie wouldn't return undefined
 
 export { setCookie, getCookie };

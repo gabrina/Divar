@@ -1,8 +1,16 @@
 import { toast } from "react-toastify";
 import { checkOTP } from "../../services/Auth";
 import { setCookie } from "../../utils/cookie";
+import { useNavigate } from "react-router-dom";
+import { getProfile } from "../../services/user";
 
 function CheckOTPForm({ code, setCode, mobile, setStep }) {
+  const navigate = useNavigate();
+  const { refetch } = useQuery({
+    queryKey: ["profile"],
+    queryFn: getProfile,
+  });
+
   const submitHandler = async (event) => {
     event.preventDefault();
 
@@ -17,8 +25,10 @@ function CheckOTPForm({ code, setCode, mobile, setStep }) {
 
     //Checking response
     if (response) {
-      // console.log(response);
+      console.log(response);
       setCookie(response.data);
+      navigate("/dashboard");
+      refetch();//requesting to authenticate user
       toast.success("ورود با موفقیت انجام شد");
     }
 

@@ -13,7 +13,7 @@ function router() {
     queryFn: getProfile,
   });
   
-  console.log({ data, isLoading, error });
+  // console.log({ data, isLoading, error });
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />

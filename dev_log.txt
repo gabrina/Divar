@@ -152,6 +152,15 @@ Note: we used a complicated function to get access token from storage. It's all 
 (Episode 354)
 Using interceptor to send access token in each and every request we send to the server in api.jsconfig
 
+(Episode 355)
+really hard to get: handling receiving a new access token using refresh token.
 
+study: api.js and getNewTokens()
 
+ (Episode 356)
+Note: we had an error we resolved it. by adding this part to user.js:
+.then((res) => res || false);
 
+after user i logged in, we must clarify who he is, what role he has, etc.
+therefore, we re-execute getProfile, so we can get user profile after logging him in.
+ 
