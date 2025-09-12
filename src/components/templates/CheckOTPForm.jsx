@@ -3,13 +3,17 @@ import { checkOTP } from "../../services/Auth";
 import { setCookie } from "../../utils/cookie";
 import { useNavigate } from "react-router-dom";
 import { getProfile } from "../../services/user";
+import { useQuery } from "@tanstack/react-query";
+import styles from "./CheckOTPForm.module.css"
 
 function CheckOTPForm({ code, setCode, mobile, setStep }) {
   const navigate = useNavigate();
-  const { refetch } = useQuery({
+  const { refetch, data } = useQuery({
     queryKey: ["profile"],
     queryFn: getProfile,
   });
+
+  console.log(data);
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -27,8 +31,8 @@ function CheckOTPForm({ code, setCode, mobile, setStep }) {
     if (response) {
       console.log(response);
       setCookie(response.data);
-      navigate("/dashboard");
-      refetch();//requesting to authenticate user
+      navigate("/"); //redirect user to home page after logging in
+      refetch(); //requesting to authenticate user
       toast.success("ورود با موفقیت انجام شد");
     }
 
@@ -41,7 +45,7 @@ function CheckOTPForm({ code, setCode, mobile, setStep }) {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} className={styles.form}>
       <p>تأیید کد ورود</p>
       <span>کد پیامک شده به«{mobile}» را وارد کنید</span>
       <label htmlFor="input">کد تأیید را وارد کنید</label>
@@ -53,7 +57,7 @@ function CheckOTPForm({ code, setCode, mobile, setStep }) {
         onChange={(e) => setCode(e.target.value)}
       />
       <button type="submit">ورود</button>
-      <button onClick={() => setStep(1)}>تغییر شماره موبایل</button>
+      <button onClick={() => setStep(1)} className={styles.backButton}>تغییر شماره موبایل</button>
     </form>
   );
 }
