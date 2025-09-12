@@ -14,7 +14,7 @@ function router() {
     queryFn: getProfile,
   });
   
-  if (data) console.log(data.data.role);
+  // if (data) console.log(data.data.role);
 
   if (isLoading) return <Loader />;
 

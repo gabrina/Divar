@@ -164,3 +164,21 @@ Note: we had an error we resolved it. by adding this part to user.js:
 after user i logged in, we must clarify who he is, what role he has, etc.
 therefore, we re-execute getProfile, so we can get user profile after logging him in.
  
+[2025-09-12]
+Let's dive into Phase2:
+
+(Episode 360)
+Layout, kid's stuff
+
+(Episode 361)
+we got 3 endpoints to handle categories, use them
+
+(Episode 362)
+developing AddCategoryForm.jsx:
+developing the JSX to be returned.
+define necessary states.
+
+(Episode 363)
+Just CSS styling, nothing special
+
+(Episode 364)
