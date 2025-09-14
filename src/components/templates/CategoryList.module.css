@@ -4,7 +4,7 @@
   flex-wrap: wrap;
 }
 
-.list h3 {
+.header {
   margin-bottom: 30px;
   border-bottom: 3px solid #a62626;
   width: fit-content;
@@ -13,6 +13,7 @@
 
 .list div {
   width: 300px;
+  height: 80px;
   display: flex;
   margin: 20px 10px;
   padding: 15px;

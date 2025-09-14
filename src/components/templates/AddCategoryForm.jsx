@@ -1,14 +1,15 @@
 import { useState } from "react";
 import Styles from "./CategoryForm.module.css";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addCategory } from "../../services/admin";
 import { toast } from "react-toastify";
 
-function AddCategoryForm({ refetch }) {
+function AddCategoryForm() {
   const [form, setForm] = useState({ name: "", slug: "", icon: "" });
   const { mutate, error, isPending, data, isError } = useMutation({
     mutationFn: addCategory,
   });
+  const queryClient = useQueryClient();
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -19,7 +20,12 @@ function AddCategoryForm({ refetch }) {
       return;
     }
 
-    mutate(form);
+    mutate(form, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["categories"]);
+        toast.success("دسته بندی با موفقیت اضافه شد");
+      },
+    });
   };
 
   const changeHandler = (event) => {
@@ -29,9 +35,8 @@ function AddCategoryForm({ refetch }) {
 
   console.log({ isPending, error, data, isError });
   if (error) toast.error("مشکلی پیش آمده است");
+
   if (data && data.status === 201) {
-    toast.success("دسته بندی با موفقیت اضافه شد");
-    refetch();
   }
   // if (error && error.status === 409)
   //   toast.error("دسته بندی وارد شده تکراری است");
