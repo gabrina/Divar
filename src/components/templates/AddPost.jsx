@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { getCategory } from "../../services/admin";
 import Styles from "./AddPost.module.css";
 import { getCookie } from "../../utils/cookie";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 function AddPost() {
   const [form, setForm] = useState({
@@ -15,10 +16,12 @@ function AddPost() {
     picture: null,
   });
 
-  const { data } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategory,
   });
+
+  const queryClient = useQueryClient();
 
   const changeHandler = (event) => {
     const name = event.target.name;
@@ -32,23 +35,29 @@ function AddPost() {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    const formData = new formData();
+    const formData = new FormData();
 
-    for (let i in form) {
-      formData.append(i, form[i]);
-    }
+    formData.append("title", form.title);
+
+    // for (let i in form) {
+    //   formData.append(i, form[i]);
+    // }
 
     const token = getCookie("accessToken");
 
+    //we need to use another form of request other than predefined api,so:
     axios
       .post(`${import.meta.env.VITE_BASE_URL}post/create`, formData, {
-        Headers: {
+        headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => toast.success("آگهی شما ثبت شد"))
-      .catch((error) => toast.error("مشکلی پیش آمده، مجددا تلاش کنید"));
+      .then(() => {
+        toast.success("آگهی شما ثبت شد");
+        queryClient.invalidateQueries(["posts"]);
+      })
+      .catch(() => toast.error("مشکلی پیش آمده، مجددا تلاش کنید"));
   };
 
   return (
@@ -79,7 +88,9 @@ function AddPost() {
       </select>
       <label htmlFor="picture">عکس</label>
       <input id="picture" type="file" name="picture" placeholder="عکس" />
-      <button type="submit">ثبت آگهی</button>
+      <button type="submit" disabled={isPending}>
+        ثبت آگهی
+      </button>
     </form>
   );
 }
