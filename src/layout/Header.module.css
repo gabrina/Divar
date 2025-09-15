@@ -38,3 +38,21 @@
   border-radius: 5px;
   margin-right: 40px;
 }
+
+.hidden {
+  display: none;
+}
+
+.menu{
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  align-items: center;
+  z-index: 1;
+}
+
+.header ul {
+  list-style: none;
+  margin-right: 5px;
+  font-size: 0.9rem;
+}
