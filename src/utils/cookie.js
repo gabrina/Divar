@@ -27,4 +27,8 @@ const clearCookie = () => {
   });
 };
 
-export { setCookie, getCookie, clearCookie };
+const isCookieEmpty = () => {
+  return document.cookie ? false : true;
+};
+
+export { setCookie, getCookie, clearCookie, isCookieEmpty };

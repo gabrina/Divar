@@ -1,20 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Styles from "./Header.module.css";
 
 import { Link, useNavigate } from "react-router-dom";
-import { clearCookie } from "../utils/cookie";
+import { clearCookie, isCookieEmpty } from "../utils/cookie";
 import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
 
 function Header() {
   const [isShown, setIsShown] = useState(false);
 
   const navigate = useNavigate();
+  const QueryClient = useQueryClient();
 
   const logoutHandler = () => {
-    clearCookie();
-    navigate("/", { replace: true });
-    toast.success("شما با موفقیت خارج شدید");
+    if (isCookieEmpty()) {
+      //the user hi snot logged in yet
+      toast.warn("شما هنوز وارد نشده اید!");
+      navigate("/auth", { replace: true });
+      return;
+    } else {
+      //the user is logged in
+      clearCookie();
+      navigate("/", { replace: true });
+      QueryClient.invalidateQueries(["profile"]);
+      toast.success("شما با موفقیت خارج شدید");
+    }
   };
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (event.target.id === "menu" || event.target.closest("#menu")) {
+        return;
+      }
+      setIsShown(false);
+    };
+
+    document.addEventListener("click", handleClick);
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return (
     <header className={Styles.header}>
@@ -28,7 +53,7 @@ function Header() {
         </span>
       </div>
       <div>
-        <div className={Styles.menu} style={{ border: "1px solid red" }}>
+        <div className={Styles.menu} id="menu">
           <span
             onClick={() => {
               setIsShown((prev) => !prev);
@@ -41,9 +66,9 @@ function Header() {
             <li>
               <Link to="/auth">آگهی های من</Link>
             </li>
-            <li onClick={logoutHandler}>
-              خروج
-            </li>
+            <hr />
+            <li >پنل ادمین</li>
+            <li onClick={logoutHandler}>خروج</li>
           </ul>
         </div>
         <Link to="/dashboard" className={Styles.button}>

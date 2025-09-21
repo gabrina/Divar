@@ -43,16 +43,32 @@
   display: none;
 }
 
-.menu{
+.menu {
   display: flex;
   flex-direction: column;
   width: 80px;
   align-items: center;
   z-index: 1;
+  color: rgba(0, 0, 0, 0.56);
 }
 
 .header ul {
+  background-color: white;
+  position: absolute;
+  top: 65px;
   list-style: none;
   margin-right: 5px;
   font-size: 0.9rem;
+  border-radius: 4px;
+  width: 100px;
+  box-shadow: 4px 4px 10px -7px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 4px 4px 10px -7px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 4px 10px -7px rgba(0, 0, 0, 0.75);
+  z-index: 10px;
+}
+
+.header ul li {
+  padding: 5px 10px;
+  margin: 5px 0;
+  cursor: pointer;
 }
