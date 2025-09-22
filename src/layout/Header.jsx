@@ -4,10 +4,16 @@ import Styles from "./Header.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { clearCookie, isCookieEmpty } from "../utils/cookie";
 import { toast } from "react-toastify";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getProfile } from "../services/user";
 
 function Header() {
   const [isShown, setIsShown] = useState(false);
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["profile"],
+    queryFn: getProfile,
+  });
 
   const navigate = useNavigate();
   const QueryClient = useQueryClient();
@@ -63,12 +69,31 @@ function Header() {
             <p>دیوار من</p>
           </span>
           <ul className={isShown ? "" : Styles.hidden}>
-            <li>
-              <Link to="/auth">آگهی های من</Link>
-            </li>
-            <hr />
-            <li >پنل ادمین</li>
-            <li onClick={logoutHandler}>خروج</li>
+            {isCookieEmpty() ? (
+              <li>
+                <Link to="/auth">ورود به حساب کاربری</Link>
+              </li>
+            ) : (
+              <>
+                <li>
+                  <Link to="/auth">آگهی های من</Link>
+                </li>
+                <hr />
+              </>
+            )}
+
+            {data && data.data.role === "ADMIN" ? (
+              <>
+                <li>
+                  <Link to="/admin">پنل ادمین</Link>
+                </li>
+                <hr />
+              </>
+            ) : (
+              ""
+            )}
+
+            {!isCookieEmpty() ? <li onClick={logoutHandler}>خروج</li> : ""}
           </ul>
         </div>
         <Link to="/dashboard" className={Styles.button}>

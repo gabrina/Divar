@@ -37,8 +37,8 @@ function PostList() {
             <div key={post._id} className={Styles.post}>
               <img src={`${import.meta.env.VITE_BASE_URL}${post.images[0]}`} />
               <div>
-                <p>{post.options.title}</p>
-                <span>{post.options.content}</span>
+                <p>{post.options?.title}</p>
+                <span>{post.options?.content}</span>
               </div>
               <div className={Styles.price}>
                 <p>{new Date(post.createdAt).toLocaleDateString("fa-IR")}</p>
