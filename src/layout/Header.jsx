@@ -10,10 +10,12 @@ import { getProfile } from "../services/user";
 function Header() {
   const [isShown, setIsShown] = useState(false);
 
+  //this most likely won't be run, because data is cached previously on mount
   const { data, isLoading, error } = useQuery({
     queryKey: ["profile"],
     queryFn: getProfile,
   });
+
 
   const navigate = useNavigate();
   const QueryClient = useQueryClient();

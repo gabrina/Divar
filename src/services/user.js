@@ -6,4 +6,6 @@ const getPosts = () => api.get("post/my");
 
 const deletePost = (id) => api.delete(`post/delete/${id}`);
 
-export { getProfile, getPosts, deletePost };
+const getAllPosts = () => api.get("/");
+
+export { getProfile, getPosts, deletePost, getAllPosts };

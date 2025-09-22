@@ -9,7 +9,7 @@ function CategoryList() {
     mutationFn: deleteCategory,
   });
 
-  const { data, isPending, refetch } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["categories"],
     queryFn: getCategory,
   });
